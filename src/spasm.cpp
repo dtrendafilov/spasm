@@ -33,19 +33,25 @@ namespace Spasm
 		bc_size = 0;
 		bytecode = NULL;
 		pc = 0;
+		frame_size = 0;
+		frame_ptr = NULL;
+		cframe_size = 1024;
+		cframe_ptr = NULL;
 	}
 
-	Spasm::Spasm (PC_t _bc_size, const byte * _bytecode)
+	Spasm::Spasm (PC_t _bc_size, const byte * _bytecode, size_t _frame_size)
+		: pc (0), bc_size (_bc_size), frame_size (_frame_size), cframe_size (1024)
 	{
-		bc_size = _bc_size;
 		bytecode = new byte[bc_size];
 		std::copy (_bytecode, _bytecode + bc_size, bytecode);
-
-		pc = 0;
+		frame_ptr = new data_t[frame_size];
+		cframe_ptr = frame_ptr;
 	}
 
 	Spasm::Spasm (const Spasm &m)
-		: data_stack (m.data_stack), return_stack (m.return_stack)
+		: pc(m.pc), bc_size (m.bc_size),
+		frame_size (m.frame_size), cframe_size (m.cframe_size),
+		data_stack (m.data_stack), return_stack (m.return_stack)
 	{
 		copybc (m);
 	}
@@ -68,10 +74,17 @@ namespace Spasm
 
 	void Spasm::copybc (const Spasm &m)
 	{
-		bc_size = m.bc_size;
 		bytecode = new byte[bc_size];
 		std::copy (m.bytecode, m.bytecode + bc_size, bytecode);
-		pc = m.pc;
+		frame_ptr = new data_t[frame_size];
+		cframe_ptr = m.cframe_ptr - m.frame_ptr + frame_ptr;
+	}
+
+	void Spasm::deleteobj () {
+		if (bytecode)
+			delete [] bytecode;
+		if (frame_ptr)
+			delete [] frame_ptr;
 	}
 
 	const Dstack_t & Spasm::get_dstack () const {
@@ -80,8 +93,11 @@ namespace Spasm
 
 	void Spasm::run ()
 	{
-		while (pc >= 0 && pc < bc_size && operations[pc] != NULL) {
-			(this->*operations[pc])();
+		while (pc >= 0 && pc < bc_size) {
+			if (bytecode[pc] > 0 && bytecode[pc] < op_size)
+				(this->*operations[bytecode[pc]])();
+			else
+				return;
 			++pc;
 		}
 	}
@@ -89,6 +105,7 @@ namespace Spasm
 	void Spasm::push () {
 		++pc;
 		data_stack.push (*(data_t *)(bytecode + pc));
+		pc += sizeof(data_t) - 1;
 	}
 
 	void Spasm::pop () {
@@ -146,6 +163,8 @@ namespace Spasm
 		++pc;
 		if (data_stack.top ())
 			pc = *((PC_t *) (bytecode + pc)) - 1;
+		else
+			pc += sizeof(PC_t) - 1;
 		data_stack.pop ();
 	}
 
@@ -153,6 +172,8 @@ namespace Spasm
 		++pc;
 		if (!data_stack.top ())
 			pc = *((PC_t *) (bytecode + pc)) - 1;
+		else
+			pc += sizeof(PC_t) - 1;
 		data_stack.pop ();
 	}
 
@@ -165,11 +186,13 @@ namespace Spasm
 		++pc;
 		return_stack.push (pc); // using the ++pc in run()
 		pc = *((PC_t *) (bytecode + pc)) - 1;
+		cframe_ptr += cframe_size;
 	}
 
 	void Spasm::ret () {
 		pc = return_stack.top ();
 		return_stack.pop ();
+		cframe_ptr -= cframe_size;
 	}
 
 	void Spasm::load () {

@@ -19,7 +19,7 @@ namespace Spasm
 	{
 		public:
 			Spasm ();
-			Spasm (PC_t, const byte *);
+			Spasm (PC_t, const byte *, size_t);
 			Spasm (const Spasm &);
 			~Spasm ();
 			Spasm & operator= (const Spasm &);
@@ -31,11 +31,15 @@ namespace Spasm
 		private:
 			static Operation operations[];
 			static PC_t op_size;
-			Dstack_t data_stack;
-			Rstack_t return_stack;
 			PC_t pc;
 			PC_t bc_size;
 			byte *bytecode;
+			data_t *cframe_ptr;
+			data_t *frame_ptr;
+			size_t frame_size;
+			size_t cframe_size;
+			Dstack_t data_stack;
+			Rstack_t return_stack;
 	
 			void push ();
 			void pop ();
