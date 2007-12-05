@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 
 #include "spasm.hpp"
 
@@ -28,7 +29,7 @@ namespace Spasm
 		&Spasm::store
 	} ;
 
-	Spasm::Spasm ()
+	Spasm::Spasm () : istr (std::cin), ostr (std::cout)
 	{
 		bc_size = 0;
 		bytecode = NULL;
@@ -39,8 +40,10 @@ namespace Spasm
 		cframe_ptr = NULL;
 	}
 
-	Spasm::Spasm (PC_t _bc_size, const byte * _bytecode, size_t _frame_size)
-		: pc (0), bc_size (_bc_size), frame_size (_frame_size), cframe_size (1024)
+	Spasm::Spasm (PC_t _bc_size, const byte * _bytecode, size_t _frame_size,
+			std::istream & _istr, std::ostream & _ostr)
+		: pc (0), bc_size (_bc_size), frame_size (_frame_size),
+		cframe_size (1024), istr (_istr), ostr (_ostr)
 	{
 		bytecode = new byte[bc_size];
 		std::copy (_bytecode, _bytecode + bc_size, bytecode);
@@ -51,7 +54,8 @@ namespace Spasm
 	Spasm::Spasm (const Spasm &m)
 		: pc(m.pc), bc_size (m.bc_size),
 		frame_size (m.frame_size), cframe_size (m.cframe_size),
-		data_stack (m.data_stack), return_stack (m.return_stack)
+		data_stack (m.data_stack), return_stack (m.return_stack),
+		istr (m.istr), ostr (m.ostr)
 	{
 		copybc (m);
 	}
@@ -117,9 +121,13 @@ namespace Spasm
 	}
 
 	void Spasm::read () {
+		data_t x;
+		istr >> x;
+		data_stack.push (x);
 	}
 
 	void Spasm::print () {
+		ostr << data_stack.pop ();
 	}
 
 	void Spasm::plus () {
@@ -171,9 +179,8 @@ namespace Spasm
 	}
 
 	void Spasm::call () {
-		++pc;
 		return_stack.push (pc); // using the ++pc in run()
-		pc = *((PC_t *) (bytecode + pc)) - 1;
+		data_stack.pop (&pc, sizeof (pc));
 		cframe_ptr += cframe_size;
 	}
 
@@ -184,9 +191,18 @@ namespace Spasm
 	}
 
 	void Spasm::load () {
+		size_t offset;
+
+		data_stack.pop (&offset, sizeof (offset));
+		data_stack.push (cframe_ptr[offset]);
 	}
 
 	void Spasm::store () {
+		data_t value = data_stack.pop ();
+		size_t offset;
+
+		data_stack.pop (&offset, sizeof (offset));
+		cframe_ptr[offset] = value;
 	}
 
 		

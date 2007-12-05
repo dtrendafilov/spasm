@@ -63,10 +63,10 @@ namespace Spasm
 		tos += x_size;
 	}
 
-	void Dstack::pop (byte * x, size_t x_size)
+	void Dstack::pop (void * x, size_t x_size)
 	{
 		if (tos - x_size >= bottom) {
-			std::copy (tos - x_size, tos, x);
+			std::copy (tos - x_size, tos, (byte *)x);
 			tos -= x_size;
 		}
 	}

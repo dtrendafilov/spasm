@@ -14,7 +14,7 @@ namespace Spasm
 			~Dstack ();
 			void push (data_t);
 			void push (byte *, size_t);
-			void pop (byte *, size_t);
+			void pop (void *, size_t);
 			data_t pop ();
 			data_t top () const;
 			void reserve (size_t);

@@ -1,6 +1,8 @@
 #ifndef  SPASM_HPP
 #define  SPASM_HPP
 
+#include <iostream>
+
 #include "types.hpp"
 #include "dstack.hpp"
 
@@ -12,7 +14,8 @@ namespace Spasm
 	{
 		public:
 			Spasm ();
-			Spasm (PC_t, const byte *, size_t);
+			Spasm (PC_t, const byte *, size_t,
+					std::istream & = std::cin, std::ostream & = std::cout);
 			Spasm (const Spasm &);
 			~Spasm ();
 			Spasm & operator= (const Spasm &);
@@ -33,6 +36,8 @@ namespace Spasm
 			size_t cframe_size;
 			Dstack data_stack;
 			Rstack_t return_stack;
+			std::istream & istr;
+			std::ostream & ostr;
 	
 			void push ();
 			void pop ();
