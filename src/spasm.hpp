@@ -1,20 +1,13 @@
 #ifndef  SPASM_HPP
 #define  SPASM_HPP
 
-#include <stack>
+#include "types.hpp"
+#include "dstack.hpp"
+
 namespace Spasm 
 {
 
 
-
-	typedef unsigned char byte;
-	typedef int PC_t;
-	typedef int data_t;
-	typedef std::stack<data_t> Dstack_t;
-	typedef std::stack<PC_t> Rstack_t;
-
-	class Spasm;
-	typedef void (Spasm::*Operation) ();
 	class Spasm
 	{
 		public:
@@ -26,7 +19,7 @@ namespace Spasm
 
 			void run ();
 
-			const Dstack_t & get_dstack () const;
+			const Dstack & get_dstack () const;
 
 		private:
 			static Operation operations[];
@@ -38,7 +31,7 @@ namespace Spasm
 			data_t *frame_ptr;
 			size_t frame_size;
 			size_t cframe_size;
-			Dstack_t data_stack;
+			Dstack data_stack;
 			Rstack_t return_stack;
 	
 			void push ();

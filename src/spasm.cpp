@@ -87,7 +87,7 @@ namespace Spasm
 			delete [] frame_ptr;
 	}
 
-	const Dstack_t & Spasm::get_dstack () const {
+	const Dstack & Spasm::get_dstack () const {
 		return data_stack;
 	}
 
@@ -123,58 +123,46 @@ namespace Spasm
 	}
 
 	void Spasm::plus () {
-		data_t x, y = data_stack.top ();
-		data_stack.pop ();
-		x = data_stack.top ();
-		data_stack.pop ();
+		data_t x, y = data_stack.pop ();
+		x = data_stack.pop ();
 		data_stack.push (x + y);
 	}
 
 	void Spasm::minus () {
-		data_t x, y = data_stack.top ();
-		data_stack.pop ();
-		x = data_stack.top ();
-		data_stack.pop ();
+		data_t x, y = data_stack.pop ();
+		x = data_stack.pop ();
 		data_stack.push (x - y);
 	}
 	void Spasm::multiply () {
-		data_t x, y = data_stack.top ();
-		data_stack.pop ();
-		x = data_stack.top ();
-		data_stack.pop ();
+		data_t x, y = data_stack.pop ();
+		x = data_stack.pop ();
 		data_stack.push (x * y);
 	}
 	void Spasm::divide () {
-		data_t x, y = data_stack.top ();
-		data_stack.pop ();
-		x = data_stack.top ();
-		data_stack.pop ();
+		data_t x, y = data_stack.pop ();
+		x = data_stack.pop ();
 		data_stack.push (x / y);
 	}
 	void Spasm::modulus () {
-		data_t x, y = data_stack.top ();
-		data_stack.pop ();
-		x = data_stack.top ();
-		data_stack.pop ();
+		data_t x, y = data_stack.pop ();
+		x = data_stack.pop ();
 		data_stack.push (x % y);
 	}
 
 	void Spasm::gotrue () {
 		++pc;
-		if (data_stack.top ())
+		if (data_stack.pop ())
 			pc = *((PC_t *) (bytecode + pc)) - 1;
 		else
 			pc += sizeof(PC_t) - 1;
-		data_stack.pop ();
 	}
 
 	void Spasm::gofalse () {
 		++pc;
-		if (!data_stack.top ())
+		if (!data_stack.pop ())
 			pc = *((PC_t *) (bytecode + pc)) - 1;
 		else
 			pc += sizeof(PC_t) - 1;
-		data_stack.pop ();
 	}
 
 	void Spasm::go () {
