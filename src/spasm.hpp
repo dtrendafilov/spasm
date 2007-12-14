@@ -5,6 +5,7 @@
 
 #include "types.hpp"
 #include "dstack.hpp"
+#include "frames.hpp"
 
 namespace Spasm 
 {
@@ -14,8 +15,8 @@ namespace Spasm
 	{
 		public:
 			Spasm ();
-			Spasm (PC_t, const byte *, size_t,
-					std::istream & = std::cin, std::ostream & = std::cout);
+			Spasm (PC_t, const byte *, std::istream & = std::cin,
+					std::ostream & = std::cout);
 			Spasm (const Spasm &);
 			~Spasm ();
 			Spasm & operator= (const Spasm &);
@@ -30,12 +31,9 @@ namespace Spasm
 			PC_t pc;
 			PC_t bc_size;
 			byte *bytecode;
-			data_t *cframe_ptr;
-			data_t *frame_ptr;
-			size_t frame_size;
-			size_t cframe_size;
 			Dstack data_stack;
 			Rstack_t return_stack;
+			FrameStack frame;
 			std::istream & istr;
 			std::ostream & ostr;
 	
@@ -69,6 +67,6 @@ namespace Spasm
 
 
 } // namespace Spasm
-#endif   /* ----- #ifndef SPASM_HPP  ----- */
+#endif   // #ifndef SPASM_HPP
 
 

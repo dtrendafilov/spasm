@@ -1,6 +1,5 @@
 #include "dstack.hpp"
 
-#include <iostream>
 #include <algorithm>
 
 namespace Spasm
@@ -58,7 +57,7 @@ namespace Spasm
 	void Dstack::push (byte * x, size_t x_size)
 	{
 		if (bottom + s_size < tos + x_size)
-			reserve ((s_size ? s_size : x_size) * 2);
+			reserve (s_size + (s_size > x_size)? s_size : x_size);
 		std::copy (x, x + x_size, tos);
 		tos += x_size;
 	}
@@ -78,7 +77,6 @@ namespace Spasm
 			tos -= sizeof (data_t);
 			x = * ((data_t *) tos);
 		}
-		//std::cout << x << std::endl;
 		return x;
 	}
 
