@@ -29,16 +29,15 @@ namespace Spasm
 		&Spasm::store
 	} ;
 
-	Spasm::Spasm () : istr (std::cin), ostr (std::cout)
+	Spasm::Spasm ()
+		: pc (0), bc_size (0), bytecode (NULL),
+		istr (&std::cin), ostr (&std::cout)
 	{
-		bc_size = 0;
-		bytecode = NULL;
-		pc = 0;
 	}
 
 	Spasm::Spasm (PC_t _bc_size, const byte * _bytecode,
 			std::istream & _istr, std::ostream & _ostr)
-		: pc (0), bc_size (_bc_size), istr (_istr), ostr (_ostr)
+		: pc (0), bc_size (_bc_size), istr (&_istr), ostr (&_ostr)
 	{
 		bytecode = new byte[bc_size];
 		std::copy (_bytecode, _bytecode + bc_size, bytecode);
@@ -64,6 +63,8 @@ namespace Spasm
 			data_stack = m.data_stack;
 			return_stack = m.return_stack;
 			frame = m.frame;
+			istr = m.istr;
+			ostr = m.ostr;
 			copybc (m);
 		}
 		return *this;
@@ -111,12 +112,12 @@ namespace Spasm
 
 	void Spasm::read () {
 		data_t x;
-		istr >> x;
+		*istr >> x;
 		data_stack.push (x);
 	}
 
 	void Spasm::print () {
-		ostr << data_stack.pop ();
+		*ostr << data_stack.pop ();
 	}
 
 	void Spasm::plus () {

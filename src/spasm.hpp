@@ -34,8 +34,8 @@ namespace Spasm
 			Dstack data_stack;
 			Rstack_t return_stack;
 			FrameStack frame;
-			std::istream & istr;
-			std::ostream & ostr;
+			std::istream * istr;
+			std::ostream * ostr;
 	
 			void push ();
 			void pop ();
