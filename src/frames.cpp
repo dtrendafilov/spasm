@@ -4,7 +4,7 @@
 
 #include "frames.hpp"
 
-namespace Spasm
+namespace SpasmImpl
 {
 	FrameStack::FrameStack ()
 		: base_ptr (NULL), frame_ptr (NULL), g_size (0), c_size (0)

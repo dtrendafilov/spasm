@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace Spasm
+namespace SpasmImpl
 {
 	Dstack::Dstack ()
 		: bottom(NULL), tos(NULL), s_size(0)

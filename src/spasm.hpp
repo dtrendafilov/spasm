@@ -7,7 +7,7 @@
 #include "dstack.hpp"
 #include "frames.hpp"
 
-namespace Spasm 
+namespace SpasmImpl 
 {
 
 
@@ -66,7 +66,7 @@ namespace Spasm
 	} ;
 
 
-} // namespace Spasm
+} // namespace SpasmImpl
 #endif   // #ifndef SPASM_HPP
 
 

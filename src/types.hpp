@@ -3,7 +3,7 @@
 
 #include <stack>
 
-namespace Spasm
+namespace SpasmImpl
 {
 	typedef unsigned char byte;
 	typedef int PC_t;

@@ -3,7 +3,7 @@
 
 #include "spasm.hpp"
 
-namespace Spasm
+namespace SpasmImpl
 {
 
 	PC_t Spasm::op_size = 19;
@@ -200,4 +200,4 @@ namespace Spasm
 
 		
 
-} // namespace Spasm
+} // namespace SpasmImpl

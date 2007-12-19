@@ -3,7 +3,7 @@
 
 #include "types.hpp"
 
-namespace Spasm
+namespace SpasmImpl
 {
 	class Dstack {
 
