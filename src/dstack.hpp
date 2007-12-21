@@ -18,6 +18,7 @@ namespace SpasmImpl
 			data_t pop ();
 			data_t top () const;
 			void reserve (size_t);
+			void strip_memory ();
 			size_t size () const;
 			size_t reserved () const;
 			bool empty () const;

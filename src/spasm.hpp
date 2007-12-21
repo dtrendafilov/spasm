@@ -1,7 +1,9 @@
 #ifndef  SPASM_HPP
 #define  SPASM_HPP
 
+
 #include "spasm_impl.hpp"
+
 
 namespace Spasm 
 {

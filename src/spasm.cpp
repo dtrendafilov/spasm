@@ -98,7 +98,7 @@ namespace SpasmImpl
 
 	void Spasm::push () {
 		++pc;
-		data_stack.push (*(data_t *)(bytecode + pc));
+		data_stack.push (* reinterpret_cast<data_t *> (bytecode + pc));
 		pc += sizeof(data_t) - 1;
 	}
 
@@ -150,7 +150,7 @@ namespace SpasmImpl
 	void Spasm::gotrue () {
 		++pc;
 		if (data_stack.pop ())
-			pc = *((PC_t *) (bytecode + pc)) - 1;
+			pc = *(reinterpret_cast<PC_t *> (bytecode + pc)) - 1;
 		else
 			pc += sizeof(PC_t) - 1;
 	}
@@ -158,14 +158,14 @@ namespace SpasmImpl
 	void Spasm::gofalse () {
 		++pc;
 		if (!data_stack.pop ())
-			pc = *((PC_t *) (bytecode + pc)) - 1;
+			pc = *(reinterpret_cast<PC_t *> (bytecode + pc)) - 1;
 		else
 			pc += sizeof(PC_t) - 1;
 	}
 
 	void Spasm::go () {
 		++pc;
-		pc = *((PC_t *) (bytecode + pc)) - 1;
+		pc = *(reinterpret_cast<PC_t *> (bytecode + pc)) - 1;
 	}
 
 	void Spasm::call () {

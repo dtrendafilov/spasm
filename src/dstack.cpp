@@ -99,6 +99,11 @@ namespace SpasmImpl
 		return s_size;
 	}
 
+	void Dstack::strip_memory ()
+	{
+		reserve (size ());
+	}
+
 	bool Dstack::empty () const
 	{
 		return tos - bottom == 0;
