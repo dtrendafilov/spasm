@@ -32,6 +32,10 @@ namespace SpasmImpl
 			delete [] bottom;
 	}
 
+	/**
+	 * Makes the stack occupy new_size bytes
+	 * \param new_size new size for the stack
+	 */
 	void Dstack::reserve (size_t new_size)
 	{
 		size_t offset = tos - bottom;
@@ -46,6 +50,11 @@ namespace SpasmImpl
 		s_size = new_size;
 	}
 
+	/*!
+	** Pushes x in the stack.
+	** If the stack is full its size is doubled.
+	** \param x data_t object to be pushed on the stack
+	*/
 	void Dstack::push (data_t x)
 	{
 		if (bottom + s_size < tos + sizeof (data_t))
@@ -54,6 +63,13 @@ namespace SpasmImpl
 		tos += sizeof (data_t);
 	}
 
+	/*!
+	** Pushes the object of size x_size bytes pointed by x in the stack.
+	** If the stack is full its size is doubled (or more is x_size is greater
+	** than the size of the stack).
+	** \param x pointer to the element to be pushed on the stack
+	** \param x_size size of the element
+	*/
 	void Dstack::push (byte * x, size_t x_size)
 	{
 		if (bottom + s_size < tos + x_size)
@@ -62,6 +78,13 @@ namespace SpasmImpl
 		tos += x_size;
 	}
 
+	/*!
+	** Pops an object of size x_size from the stack.
+	** The object is written to the place pointed by x.
+	** 
+	** \param x pointer to the place for popping
+	** \param x_size size of the object to be popped
+	*/
 	void Dstack::pop (void * x, size_t x_size)
 	{
 		if (tos - x_size >= bottom) {
@@ -70,6 +93,9 @@ namespace SpasmImpl
 		}
 	}
 
+	/*!
+	** \return a single data_t object, popping it from the stack.
+	*/
 	data_t Dstack::pop ()
 	{
 		data_t x;
@@ -80,6 +106,9 @@ namespace SpasmImpl
 		return x;
 	}
 
+	/*!
+	** \return copy of the data_t object that is on top of the stack
+	*/
 	data_t Dstack::top () const
 	{
 		data_t x;
@@ -89,26 +118,45 @@ namespace SpasmImpl
 		return x;
 	}
 
+	/*!
+	** \return the size of the stack in bytes
+	*/
 	size_t Dstack::size () const
 	{
 		return tos - bottom;
 	}
 
+	/*!
+	** \return the space reserved for the stack in bytes
+	*/
 	size_t Dstack::reserved () const
 	{
 		return s_size;
 	}
 
+	/*!
+	** Frees unused memory. Note that it is not always possible because memory
+	** management is done with new / delete
+	*/
+	
 	void Dstack::strip_memory ()
 	{
 		reserve (size ());
 	}
 
+	/*!
+	** \return true if the stack is empty
+	*/
 	bool Dstack::empty () const
 	{
 		return tos - bottom == 0;
 	}
 
+	/*!
+	** Creates a copy of ds
+	**
+	** \param ds data stack to be copied
+	*/
 	void Dstack::copy_dstack (const Dstack &ds)
 	{
 		if (ds.bottom) {

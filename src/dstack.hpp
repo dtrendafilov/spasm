@@ -5,6 +5,11 @@
 
 namespace SpasmImpl
 {
+	//! class representing the data stack
+	
+	/*! The class is quite simple stack. It is byte-orientatied - every push
+	** and pop is done in bytes with no taking care of any byte order!
+	*/
 	class Dstack {
 
 		public:
@@ -17,6 +22,7 @@ namespace SpasmImpl
 			void pop (void *, size_t);
 			data_t pop ();
 			data_t top () const;
+
 			void reserve (size_t);
 			void strip_memory ();
 			size_t size () const;
