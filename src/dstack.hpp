@@ -31,8 +31,14 @@ namespace SpasmImpl
 
 		private:
 			void copy_dstack (const Dstack &);
+			
+			//! pointer to the bottom of the stack
 			byte *bottom;
+			
+			//! pointer to the top of the stack
 			byte *tos;
+			
+			//! size of the stack in bytes
 			size_t s_size;
 	} ;
 }

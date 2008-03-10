@@ -38,16 +38,32 @@ namespace SpasmImpl
 		return *this;
 	}
 
+	/*!
+	** Returns a data_t object from the current frame
+	**
+	** \param index - index of the data_t object
+	** \return const reference to the object
+	*/
 	const data_t & FrameStack::operator[] (int index) const
 	{
 		return frame_ptr[index];
 	}
 
+	/*!
+	** Returns a data_t object from the current frame
+	**
+	** \param index - index of the data_t object
+	** \return reference to the object
+	*/
 	data_t & FrameStack::operator[] (int index)
 	{
 		return frame_ptr[index];
 	}
 
+	/*!
+	** Removes the current frame from the stack.
+	** It is called when a function does return.
+	*/
 	void FrameStack::pop_frame ()
 	{
 
@@ -63,6 +79,11 @@ namespace SpasmImpl
 		}
 	}
 
+	/*!
+	** Creates (pushes on the stack) new frame of fsize data_t objects
+	**
+	** \param fsize - size in data_t objects of the new frame
+	*/
 	void FrameStack::new_frame (size_t fsize)
 	{
 		data_t *new_frame;
@@ -82,6 +103,9 @@ namespace SpasmImpl
 		c_size = fsize;
 	}
 	
+	/*!
+	** \return true if the stack is empty
+	*/
 	bool FrameStack::empty () const
 	{
 		return frame_ptr == base_ptr && c_size == 0;

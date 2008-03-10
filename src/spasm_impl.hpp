@@ -10,7 +10,12 @@
 namespace SpasmImpl 
 {
 
-
+	//! The Abstract Stack Machine
+	/*!
+	** The machine contains a data stack for operations and control flow and
+	** frame stack for function calls (including parameter passing) and local
+	** variables and return stack for the addresses of the returns.
+	*/
 	class Spasm
 	{
 		public:
@@ -26,15 +31,34 @@ namespace SpasmImpl
 			const Dstack & get_dstack () const;
 
 		private:
+			//! Operations (opcodes) of the machine
 			static Operation operations[];
+
+			//! number of operations
 			static PC_t op_size;
+
+			//! Program counter - points the current opcode
 			PC_t pc;
+
+			//! size of the program bytecode
 			PC_t bc_size;
+
+			//! bytecode of the program
 			byte *bytecode;
+
+			//! Data stack for arithmetic operations and control flow
 			Dstack data_stack;
+
+			//! Return stack for the addresses of the returns
 			Rstack_t return_stack;
+
+			//! Stack for the frame of the functions
 			FrameStack frame;
+
+			//! Input stream for read () operation
 			std::istream * istr;
+
+			//! Output stream for print () opertion
 			std::ostream * ostr;
 	
 			void push ();
