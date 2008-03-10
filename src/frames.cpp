@@ -12,30 +12,47 @@ namespace SpasmImpl
 	}
 
 	FrameStack::FrameStack (const FrameStack &fs)
-		: base_ptr (fs.base_ptr), frame_ptr (fs.frame_ptr),
-		g_size (fs.g_size), c_size (fs.c_size), fstack (fs.fstack)
+		: g_size (fs.g_size), c_size (fs.c_size), fstack (fs.fstack)
 	{
+		copy_fstack (fs);
 	}
 
 	FrameStack::~FrameStack ()
 	{
-		if (base_ptr)
-			delete [] base_ptr;
+		delete_fstack ();
 	}
 
 	FrameStack & FrameStack::operator= (const FrameStack &fs)
 	{
 		if (this != &fs) {
-			if (base_ptr)
-				delete [] base_ptr;
-			base_ptr = new data_t[fs.g_size];
-			std::copy (fs.base_ptr, fs.frame_ptr + fs.c_size, base_ptr);
-			frame_ptr = base_ptr + (fs.frame_ptr - fs.base_ptr);
+			delete_fstack ();
+			copy_fstack (fs);
 			g_size = fs.g_size;
 			c_size = fs.c_size;
 			fstack = fs.fstack;
 		}
 		return *this;
+	}
+
+	/*!
+	** Deletes the frame stack
+	*/
+	void FrameStack::delete_fstack ()
+	{
+		if (base_ptr)
+			delete [] base_ptr;
+	}
+
+	/*!
+	** Copies the frame stack fs
+	** 
+	** \param fs - the frame stack to be copied
+	*/
+	void FrameStack::copy_fstack (const FrameStack &fs)
+	{
+			base_ptr = new data_t[fs.g_size];
+			std::copy (fs.base_ptr, fs.frame_ptr + fs.c_size, base_ptr);
+			frame_ptr = base_ptr + (fs.frame_ptr - fs.base_ptr);
 	}
 
 	/*!

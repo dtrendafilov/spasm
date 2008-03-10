@@ -43,6 +43,9 @@ namespace SpasmImpl
 
 			//! stack of the offsets between frames in the stack.
 			std::stack<size_t> fstack;
+
+			void copy_fstack (const FrameStack &);
+			void delete_fstack ();
 	} ;
 
 }
