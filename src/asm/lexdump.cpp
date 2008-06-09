@@ -6,7 +6,7 @@
 #include "lexer.hpp"
 #include "token.hpp"
 
-using namespace SpasmImpl::Lexer;
+using namespace SpasmImpl::Lexer::ASM;
 
 #define TOKENS			\
         TOK(push)		\
@@ -34,16 +34,16 @@ using namespace SpasmImpl::Lexer;
 class TokenDumper : public TokenStream
 {
 	public:
-		void push_token (const ASMToken &token)
+		void push_token (const Token &token)
 		{
-			ASMToken::Token ttype = token.token_type ();
+			Token::Token_type ttype = token.type ();
 			std::cout.width (8);
-			std::cout << token.get_lineno ();
+			std::cout << token.lineno ();
 			std::cout << ": " << token_name[ttype];
-			if (ttype == ASMToken::integer || ttype == ASMToken::xinteger)
-				std::cout << '|' << token.get_value_int () << '|';
-			else if (ttype == ASMToken::ident)
-				std::cout << '|' << token.get_value_str () << '|';
+			if (ttype == Token::integer || ttype == Token::xinteger)
+				std::cout << '|' << token.value_int () << '|';
+			else if (ttype == Token::ident)
+				std::cout << '|' << token.value_str () << '|';
 			std::cout << std::endl;
 		}
 	private:
@@ -64,7 +64,7 @@ TokenDumper::token_name[23] = {
 int
 main ()
 {
-	SpasmImpl::Lexer::ASMLexer lex(std::cin);
+	SpasmImpl::Lexer::ASM::Lexer lex(std::cin);
 	TokenDumper td;
 
 	assert (lex.tokenize (td));

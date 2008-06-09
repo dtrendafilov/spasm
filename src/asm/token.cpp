@@ -6,36 +6,40 @@ namespace SpasmImpl
 {
 	namespace Lexer
 	{
-
-		ASMToken::ASMToken (ASMToken::Token _type, size_t _lineno,
-				const char * _start, const char *_end)
-			: type (_type), lineno (_lineno)
+		namespace ASM
 		{
-			if (type == integer || type == xinteger)
-				value_int = strtol (_start, NULL, 0);
-			else if (type == ident)
-				if (_end)
-					value_str = std::string (_start, _end);
-				else
-					value_str = std::string (_start);
 
-		}
+			Token::Token (Token::Token_type type, size_t lineno,
+					const char * start, const char *end)
+				: _type (type), _lineno (lineno)
+			{
+				if (_type == integer || _type == xinteger)
+					_value_int = strtol (start, NULL, 0);
+				else if (_type == ident)
+					if (end)
+						_value_str = std::string (start, end);
+					else
+						_value_str = std::string (start);
 
-		ASMToken::Token ASMToken::token_type () const {
-			return type;
-		}
+			}
 
-		int ASMToken::get_value_int () const {
-			return value_int;
-		}
+			Token::Token_type Token::type () const {
+				return _type;
+			}
 
-		const std::string & ASMToken::get_value_str () const {
-			return value_str;
-		}
+			int Token::value_int () const {
+				return _value_int;
+			}
 
-		size_t ASMToken::get_lineno () const {
-			return lineno;
-		}
+			const std::string & Token::value_str () const {
+				return _value_str;
+			}
+
+			size_t Token::lineno () const {
+				return _lineno;
+			}
+
+		} // namespace ASM
 
 	}	// namespace Lexer
 }	// namespace SpasmImpl

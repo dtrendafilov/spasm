@@ -30,43 +30,47 @@ namespace SpasmImpl
 {
 	namespace Lexer
 	{
-		class ASMToken
+		namespace ASM
 		{
-			public:
-				enum Token {
-					halt = 0, 
+			class Token
+			{
+				public:
+					enum Token_type {
+						halt = 0, 
 #define TOK(x) x,
-					TOKENS
+						TOKENS
 #undef TOK
-					notused
-				} ;
+							notused
+					} ;
 
-				ASMToken (Token, size_t, const char * = NULL, const char * = NULL);
+					Token (Token_type, size_t, const char * = NULL,
+							const char * = NULL);
 
-				Token token_type () const;
+					Token_type type () const;
 
-				size_t get_lineno () const;
+					size_t lineno () const;
 
-				int get_value_int () const;
+					int value_int () const;
 
-				const std::string & get_value_str () const;
+					const std::string & value_str () const;
 
-			private:
-				Token type;
-				
-				size_t lineno;
+				private:
+					Token_type _type;
 
-				int value_int;
+					size_t _lineno;
 
-				std::string value_str;
-		} ;
+					int _value_int;
 
-		class TokenStream
-		{
-			public:
-				virtual void push_token (const ASMToken &) = 0;
-				virtual ~TokenStream () { };
-		} ;
+					std::string _value_str;
+			} ;
+
+			class TokenStream
+			{
+				public:
+					virtual void push_token (const Token &) = 0;
+					virtual ~TokenStream () { };
+			} ;
+		} // namespace ASM
 	}	// namespace Lexer
 }	// namespace SpasmImpl
 
