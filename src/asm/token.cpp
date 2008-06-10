@@ -4,9 +4,9 @@
 
 namespace SpasmImpl
 {
-	namespace Lexer
+	namespace ASM
 	{
-		namespace ASM
+		namespace Lexer
 		{
 
 			Token::Token (Token::Token_type type, size_t lineno,
@@ -39,7 +39,7 @@ namespace SpasmImpl
 				return _lineno;
 			}
 
-		} // namespace ASM
+		} // namespace Lexer
 
-	}	// namespace Lexer
+	}	// namespace ASM
 }	// namespace SpasmImpl

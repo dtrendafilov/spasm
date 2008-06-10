@@ -28,9 +28,9 @@
 
 namespace SpasmImpl
 {
-	namespace Lexer
+	namespace ASM
 	{
-		namespace ASM
+		namespace Lexer
 		{
 			class Token
 			{
@@ -70,8 +70,8 @@ namespace SpasmImpl
 					virtual void push_token (const Token &) = 0;
 					virtual ~TokenStream () { };
 			} ;
-		} // namespace ASM
-	}	// namespace Lexer
+		} // namespace Lexer
+	}	// namespace ASM
 }	// namespace SpasmImpl
 
 #undef TOKENS

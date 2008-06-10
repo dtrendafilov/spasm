@@ -8,10 +8,11 @@
 
 namespace SpasmImpl
 {
-	//! Namespace for all lexical analisys classes
-	namespace Lexer
+	// ! Namespace for all classes and functions dealing with assembler
+	namespace ASM
 	{
-		namespace ASM
+		//! Namespace for all lexical analisys classes
+		namespace Lexer
 		{
 
 			Lexer::Lexer (std::istream & _file)
@@ -2173,8 +2174,8 @@ yy95:
 			}
 
 
-		}	// namespace ASM
+		}	// namespace Lexer
 
-	}	// namespace Lexer
+	}	// namespace ASM
 }	// namespace SpasmImpl
 

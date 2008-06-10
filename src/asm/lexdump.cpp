@@ -6,7 +6,7 @@
 #include "lexer.hpp"
 #include "token.hpp"
 
-using namespace SpasmImpl::Lexer::ASM;
+using namespace SpasmImpl::ASM::Lexer;
 
 #define TOKENS			\
         TOK(push)		\
@@ -64,7 +64,7 @@ TokenDumper::token_name[23] = {
 int
 main ()
 {
-	SpasmImpl::Lexer::ASM::Lexer lex(std::cin);
+	Lexer lex(std::cin);
 	TokenDumper td;
 
 	assert (lex.tokenize (td));

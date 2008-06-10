@@ -8,10 +8,11 @@
 
 namespace SpasmImpl
 {
-	//! Namespace for all lexical analisys classes
-	namespace Lexer
+	// ! Namespace for all classes and functions dealing with assembler
+	namespace ASM
 	{
-		namespace ASM
+		//! Namespace for all lexical analisys classes
+		namespace Lexer
 		{
 			/*!
 			** Class for lexers for the assembler-like language for spasm
@@ -55,8 +56,8 @@ namespace SpasmImpl
 
 
 			} ;
-		}	// namespace ASM
-	}	// namespace Lexer
+		}	// namespace Lexer
+	}	// namespace ASM
 }	// namespace SpasmImpl
 
 #endif
