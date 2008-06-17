@@ -8,6 +8,11 @@ namespace SpasmImpl
 	{
 		namespace Lexer
 		{
+			Token::Token()
+				: _type (Token::notused), _lineno (0),
+				_value_int (0), _value_str ("")
+			{
+			}
 
 			Token::Token (Token::Token_type type, size_t lineno,
 					const char * start, const char *end)

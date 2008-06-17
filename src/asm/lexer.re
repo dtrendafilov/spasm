@@ -13,7 +13,7 @@ namespace SpasmImpl
 		{
 
 			Lexer::Lexer (std::istream & _file)
-				: file (&_file), buffer_size (4096)
+				: file (&_file), buffer_size (8), state (-1), lineno (0)
 			{
 				buffer = new char[buffer_size];
 				cursor = limit = marker = token_start = NULL;
@@ -26,19 +26,26 @@ namespace SpasmImpl
 
 			bool Lexer::tokenize (TokenStream &ts)
 			{
-				size_t lineno = 0;
-
-				buffer_init ();
-
-				while (1)
 /*!re2c
-re2c:indent:top = 4;
+re2c:indent:top = 5;
 
-re2c:define:YYFILL=read;
+re2c:define:YYFILL="return true;";
+re2c:define:YYFILL:naked=1;
 re2c:define:YYCTYPE="char";
 re2c:define:YYCURSOR=cursor;
 re2c:define:YYLIMIT=limit;
 re2c:define:YYMARKER=marker;
+re2c:define:YYGETSTATE=state;
+re2c:define:YYGETSTATE:naked=1;
+re2c:define:YYSETSTATE="state = ";
+re2c:define:YYSETSTATE:naked=1;
+*/
+
+/*!getstate:re2c */
+
+				while (1) {
+
+/*!re2c
 
 DIGIT	= [0-9] ;
 XDIGIT	= [0-9a-fA-F] ;
@@ -211,6 +218,8 @@ IDENTIFIER	{
 			}
 
 "\000"		{
+				ts.push_token (Token (Token::endinput, lineno));
+
 				break;
 			}
 
@@ -219,6 +228,7 @@ IDENTIFIER	{
 			}
 
 */
+				}
 				return true;
 			}
 

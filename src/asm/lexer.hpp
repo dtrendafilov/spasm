@@ -23,15 +23,16 @@ namespace SpasmImpl
 					~Lexer ();
 					bool tokenize (TokenStream &);
 
+					//! fills the buffer called when the lexer needs more data
+					void read (size_t);
+					void buffer_init ();
+
 				private:
 					Lexer (const Lexer &);
 					Lexer & operator= (const Lexer &);
 
 					void buffer_grow (size_t);
-					void buffer_init ();
 
-					//! fills the buffer called when the lexer needs more data
-					void read (size_t);
 
 					//! input stream for the lexer
 					std::istream *file;
@@ -53,6 +54,15 @@ namespace SpasmImpl
 
 					//! pointer to the start of the just recognized token
 					char *token_start;
+
+					//! saves the state of the lexer
+					unsigned int state;
+
+					//! current char
+					char yych;
+
+					//! number of current line
+					size_t lineno;
 
 
 			} ;

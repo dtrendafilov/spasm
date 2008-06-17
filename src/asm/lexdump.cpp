@@ -29,11 +29,13 @@ using namespace SpasmImpl::ASM::Lexer;
         TOK(label)		\
         TOK(ident)      \
         TOK(integer)	\
-		TOK(xinteger)	
+		TOK(xinteger)	\
+		TOK(endinput)
 
 class TokenDumper : public TokenStream
 {
 	public:
+		TokenDumper() : end_reached (false) { }
 		void push_token (const Token &token)
 		{
 			Token::Token_type ttype = token.type ();
@@ -45,14 +47,25 @@ class TokenDumper : public TokenStream
 			else if (ttype == Token::ident)
 				std::cout << '|' << token.value_str () << '|';
 			std::cout << std::endl;
+			if (token.type() == Token::endinput)
+				end_reached = true;
 		}
+
+		bool input_end() const
+		{
+			return end_reached;
+		}
+
+
 	private:
 
-		static const char *token_name[23];
+		bool end_reached;
+
+		static const char *token_name[24];
 } ;
 
 const char *
-TokenDumper::token_name[23] = {
+TokenDumper::token_name[24] = {
 	"halt", 
 #define TOK(x) #x,
 	TOKENS
@@ -66,8 +79,14 @@ main ()
 {
 	Lexer lex(std::cin);
 	TokenDumper td;
+	Token token;
 
-	assert (lex.tokenize (td));
+	lex.buffer_init();
+
+	while (!td.input_end()) {
+		lex.read (1);
+		lex.tokenize (td);
+	}
 
 	return 0;
 }

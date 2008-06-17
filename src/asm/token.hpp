@@ -24,7 +24,8 @@
         TOK(label)		\
         TOK(ident)      \
         TOK(integer)	\
-		TOK(xinteger)	
+		TOK(xinteger)	\
+		TOK(endinput)
 
 namespace SpasmImpl
 {
@@ -43,16 +44,18 @@ namespace SpasmImpl
 							notused
 					} ;
 
+					Token();
+
 					Token (Token_type, size_t, const char * = NULL,
 							const char * = NULL);
 
-					Token_type type () const;
+					Token_type type() const;
 
-					size_t lineno () const;
+					size_t lineno() const;
 
-					int value_int () const;
+					int value_int() const;
 
-					const std::string & value_str () const;
+					const std::string & value_str() const;
 
 				private:
 					Token_type _type;
