@@ -36,9 +36,12 @@ namespace SpasmImpl
 
 				typedef unsigned char byte;
 
+				virtual ~Bytecode_Stream();
 				virtual void push_opcode (Opcode_t) = 0;
 				virtual void push_integer (int) = 0;
+				virtual void push_location (size_t) = 0;
 				virtual void set_location (size_t, size_t) = 0;
+				virtual size_t size() const = 0;
 		} ;	// class Bytecode_Stream
 
 		class Bytecode_File : public Bytecode_Stream
@@ -65,7 +68,11 @@ namespace SpasmImpl
 			public:
 				virtual void push_opcode (Opcode_t);
 				virtual void push_integer (int);
+				virtual void push_location (size_t);
 				virtual void set_location (size_t, size_t);
+				virtual size_t size() const;
+
+				const char *bytecode() const;
 			private:
 				void push_byte (Bytecode_Stream::byte);
 

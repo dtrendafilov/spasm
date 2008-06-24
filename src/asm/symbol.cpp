@@ -49,6 +49,10 @@ namespace SpasmImpl
 			return _positions.end();
 		}
 
+		Symbol_Table::Symbol_Table ()
+		{
+		}
+
 		/*!
 		** Search the table for symbol by identifier
 		**

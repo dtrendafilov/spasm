@@ -14,8 +14,8 @@ namespace SpasmImpl
 		namespace Lexer
 		{
 
-			Lexer::Lexer (std::istream & _file)
-				: file (&_file), buffer_size (8), state (-1), lineno (0)
+			Lexer::Lexer (std::istream & _file, size_t buff_size)
+				: file (&_file), buffer_size (buff_size), state (-1), lineno (0)
 			{
 				buffer = new char[buffer_size];
 				cursor = limit = marker = token_start = NULL;

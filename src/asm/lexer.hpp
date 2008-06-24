@@ -5,7 +5,6 @@
 
 #include "token.hpp"
 
-
 namespace SpasmImpl
 {
 	// ! Namespace for all classes and functions dealing with assembler
@@ -19,12 +18,12 @@ namespace SpasmImpl
 			*/
 			class Lexer {
 				public:
-					Lexer (std::istream &);
+					Lexer (std::istream &, size_t = 4096);
 					~Lexer ();
 					bool tokenize (TokenStream &);
 
 					//! fills the buffer called when the lexer needs more data
-					void read (size_t);
+					void read (size_t = 1);
 					void buffer_init ();
 
 				private:

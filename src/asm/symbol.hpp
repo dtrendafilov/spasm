@@ -47,6 +47,7 @@ namespace SpasmImpl
 				typedef std::map<std::string, Symbol *> Table_t;
 				typedef Table_t::iterator iterator;
 			public:
+				Symbol_Table();
 				typedef Table_t::const_iterator const_iterator;
 
 				Symbol * find (const std::string &) const;

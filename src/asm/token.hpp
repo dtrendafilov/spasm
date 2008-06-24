@@ -1,7 +1,7 @@
-#include <string>
-
 #ifndef  TOKEN_HPP
 #define  TOKEN_HPP
+
+#include <string>
 
 #define TOKENS			\
         TOK(push)		\
@@ -44,7 +44,7 @@ namespace SpasmImpl
 							notused
 					} ;
 
-					Token();
+					Token(Token_type = notused);
 
 					Token (Token_type, size_t, const char * = NULL,
 							const char * = NULL);
@@ -73,6 +73,7 @@ namespace SpasmImpl
 					virtual void push_token (const Token &) = 0;
 					virtual ~TokenStream () { };
 			} ;
+
 		} // namespace Lexer
 	}	// namespace ASM
 }	// namespace SpasmImpl

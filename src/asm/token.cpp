@@ -1,4 +1,7 @@
 #include <string>
+#include <new>
+#include <memory>
+#include <queue>
 
 #include "token.hpp"
 
@@ -8,8 +11,8 @@ namespace SpasmImpl
 	{
 		namespace Lexer
 		{
-			Token::Token()
-				: _type (Token::notused), _lineno (0),
+			Token::Token(Token_type type)
+				: _type (type), _lineno (0),
 				_value_int (0), _value_str ("")
 			{
 			}
