@@ -28,6 +28,8 @@ namespace SpasmImpl
 				Symbol_Table _symbols;
 
 		} ;	// class Assembler
+
+		const char * compile (std::istream &);
 	}	// namespace ASM
 }	// namespace SpasmImpl
 

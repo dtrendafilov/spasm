@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include "assembler.hpp"
 #include "symbol.hpp"
 #include "bytecode.hpp"
@@ -24,6 +26,8 @@ namespace SpasmImpl
 						assemble_identifier (token);
 						break;
 					case Lexer::Token::label :
+						token = _tokenizer->next_token();
+						assert (token.type() == Lexer::Token::ident);
 						_symbols.define (token.value_str(), _bytecode->size());
 						break;
 					case Lexer::Token::integer :
@@ -34,7 +38,8 @@ namespace SpasmImpl
 						_bytecode->push_opcode ((Bytecode_Stream::Opcode_t) 
 								token.type());
 				}
-				Lexer::Token token = _tokenizer->next_token();
+
+				token = _tokenizer->next_token();
 			}
 
 			Symbol_Table::const_iterator i = _symbols.begin();
@@ -62,6 +67,17 @@ namespace SpasmImpl
 			_bytecode->push_location (symbol->definition());
 		}
 
+
+		const char * compile (std::istream &istr)
+		{
+			Lexer::Tokenizer tokenizer (istr);
+			Bytecode_Memory bytecode;
+			Assembler assembler (tokenizer, bytecode);
+
+			assembler.assemble();
+
+			return bytecode.bytecode();
+		}
 
 	}	// namespace ASM
 }	// namespace SpasmImpl

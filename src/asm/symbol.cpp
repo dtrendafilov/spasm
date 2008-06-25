@@ -109,6 +109,18 @@ namespace SpasmImpl
 			return psymbol;
 		}
 
+		Symbol_Table::const_iterator Symbol_Table::begin() const
+		{
+			return _table.begin();
+		}
+
+		Symbol_Table::const_iterator Symbol_Table::end() const
+		{
+			return _table.end();
+		}
+
+
+
 
 	}	// namespace ASM
 }	// namespace SpasmImpl

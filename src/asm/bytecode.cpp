@@ -32,7 +32,7 @@ namespace SpasmImpl
 
 		void Bytecode_File::push_integer (int number)
 		{
-			for (int i = sizeof (int) - 1; i >= 0; --i)
+			for (size_t i = 0; i < sizeof (int); ++i)
 				push_byte ((number >> (i << 3)) & 0xff);
 		}
 
@@ -49,21 +49,20 @@ namespace SpasmImpl
 
 		void Bytecode_Memory::push_integer (int number)
 		{
-			for (int i = sizeof (int) - 1; i >= 0; --i)
+			for (size_t i = 0; i < sizeof (int); ++i)
 				push_byte ((number >> (i << 3)) & 0xff);
 		}
 
 
 		void Bytecode_Memory::set_location (size_t index, size_t location)
 		{
-			int l = sizeof (size_t) - 1;
-			for (int i = l; i >= 0; --i)
-				_bytecode.at (index + l - i) = ((location >> (i << 3)) & 0xff);
+			for (size_t i = 0; i < sizeof (size_t); ++i)
+				_bytecode.at (index + i) = ((location >> (i << 3)) & 0xff);
 		}
 
 		void Bytecode_Memory::push_location (size_t location)
 		{
-			for (int i = sizeof (size_t) - 1; i >= 0; --i)
+			for (size_t i = 0; i < sizeof (size_t); ++i)
 				_bytecode.push_back ((location >> (i << 3)) & 0xff);
 		}
 
