@@ -84,6 +84,9 @@ namespace SpasmImpl
 			void load ();
 			void store ();
 
+			void less ();
+			void lesseq ();
+
 			// private method for copying and deleting an object
 			void copybc (const Spasm &);
 			void deleteobj ();

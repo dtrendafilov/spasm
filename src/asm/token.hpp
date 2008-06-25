@@ -21,6 +21,8 @@
         TOK(ret)		\
         TOK(load)		\
         TOK(store)		\
+		TOK(less)		\
+		TOK(lesseq)		\
         TOK(label)		\
         TOK(ident)      \
         TOK(integer)	\

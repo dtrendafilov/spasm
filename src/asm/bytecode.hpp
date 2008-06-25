@@ -31,7 +31,9 @@ namespace SpasmImpl
 					call,
 					ret,
 					load,
-					store
+					store,
+					less,
+					lesseq
 				} ;
 
 				typedef unsigned char byte;

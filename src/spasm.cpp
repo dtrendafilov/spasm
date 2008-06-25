@@ -6,9 +6,9 @@
 namespace SpasmImpl
 {
 
-	PC_t Spasm::op_size = 19;
+	PC_t Spasm::op_size = 21;
 	// Be sure the same number is on the previous and next lines
-	Operation Spasm::operations[19] = {
+	Operation Spasm::operations[] = {
 		NULL,
 		&Spasm::push,
 		&Spasm::pop,
@@ -26,7 +26,9 @@ namespace SpasmImpl
 		&Spasm::call,
 		&Spasm::ret,
 		&Spasm::load,
-		&Spasm::store
+		&Spasm::store,
+		&Spasm::less,
+		&Spasm::lesseq
 	} ;
 
 	Spasm::Spasm ()
@@ -288,6 +290,28 @@ namespace SpasmImpl
 
 		data_stack.pop (&offset, sizeof (offset));
 		frame[offset] = value;
+	}
+
+	/*!
+	** Compares the values on top of the stack. Pushes 1 if the value before
+	** the top of the stack is less than that on top of the stack.
+	*/
+	void Spasm::less () {
+		data_t y = data_stack.pop ();
+		data_t x = data_stack.pop ();
+
+		data_stack.push (x < y);
+	}
+
+	/*!
+	** Compares the values on top of the stack. Pushes 1 if the value before
+	** the top of the stack is less than or equal to that on top of the stack.
+	*/
+	void Spasm::lesseq () {
+		data_t y = data_stack.pop ();
+		data_t x = data_stack.pop ();
+
+		data_stack.push (x <= y);
 	}
 
 		

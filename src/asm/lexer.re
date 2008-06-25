@@ -12,8 +12,9 @@ namespace SpasmImpl
 		namespace Lexer
 		{
 
-			Lexer::Lexer (std::istream & _file)
-				: file (&_file), buffer_size (8), state (-1), lineno (0)
+			Lexer::Lexer (std::istream & _file, size_t _buffer_size)
+				: file (&_file), buffer_size (_buffer_size), state (-1),
+				lineno (0)
 			{
 				buffer = new char[buffer_size];
 				cursor = limit = marker = token_start = NULL;
@@ -52,7 +53,7 @@ XDIGIT	= [0-9a-fA-F] ;
 
 INTEGER		= "-"? "0" | ([1-9] DIGIT*) ;
 XINTEGER	= "0" [xX] XDIGIT+ ;
-IDENTIFIER	= [a-zA-Z_] [0-9a-zA-Z_]+ ;
+IDENTIFIER	= [a-zA-Z_] [0-9a-zA-Z_]* ;
 
 INTEGER		{
 				ts.push_token (Token (Token::integer, lineno,
@@ -184,6 +185,18 @@ XINTEGER	{
 
 "store"		{
 				ts.push_token (Token (Token::store, lineno));
+				token_start = cursor;
+
+				continue;
+			}
+"<="		{
+				ts.push_token (Token (Token::lesseq, lineno));
+				token_start = cursor;
+
+				continue;
+			}
+"<"			{
+				ts.push_token (Token (Token::less, lineno));
 				token_start = cursor;
 
 				continue;
