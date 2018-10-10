@@ -2,6 +2,7 @@
 #define  TYPES_HPP
 
 #include <stack>
+#include <cstdlib>
 
 namespace SpasmImpl
 {

@@ -23,7 +23,7 @@ namespace SpasmImpl
 					Token next_token();
 
 				private:
-					std::auto_ptr<Lexer> _lexer;
+					std::unique_ptr<Lexer> _lexer;
 					std::queue<Token> _tokens;
 					bool end_input;
 			} ;	// class Tokenizer
