@@ -119,7 +119,10 @@ namespace SpasmImpl
 			if (bytecode[pc] > 0 && bytecode[pc] < op_size)
 				(this->*operations[bytecode[pc]])();
 			else
+                        {
+                                std::cerr << "opcode got to " << int(bytecode[pc]) << std::endl;
 				break;
+                        }
 			++pc;
 		}
 	}
@@ -221,8 +224,8 @@ namespace SpasmImpl
 		++pc;
 		if (data_stack.pop ())
 			pc = *(reinterpret_cast<PC_t *> (bytecode + pc)) - 1;
-		else
-			pc += sizeof(PC_t) - 1;
+                else
+                        pc += sizeof(size_t) - 1;
 	}
 
 	/*!
@@ -234,8 +237,8 @@ namespace SpasmImpl
 		++pc;
 		if (!data_stack.pop ())
 			pc = *(reinterpret_cast<PC_t *> (bytecode + pc)) - 1;
-		else
-			pc += sizeof(PC_t) - 1;
+                else
+                        pc += sizeof(size_t) - 1;
 	}
 
 	/*!
