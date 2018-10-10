@@ -27,5 +27,7 @@ main (int argc, const char *argv[])
 
 	vm.run();
 
+	std::cout << std::endl;
+
 	return 0;
 }
