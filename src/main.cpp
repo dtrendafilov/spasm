@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include "spasm.hpp"
+#include <memory>
 
 int
 main (int argc, const char *argv[])
@@ -15,15 +16,15 @@ main (int argc, const char *argv[])
 
 	input.read ((char *) &len, sizeof (len));
 
-	Spasm::byte *bytecode = new Spasm::byte[len];
+	std::unique_ptr<Spasm::byte[]> bytecode(new Spasm::byte[len]);
 
-	input.read ((char *)bytecode, len);
+	input.read ((char *)bytecode.get(), len);
 
 	for (size_t i = 0; i < len; ++i)
 		std::cout << std::hex << (int) bytecode[i] << ' ';
 	std::cout << std::endl;
 
-	Spasm::Spasm vm(len, bytecode);
+	Spasm::Spasm vm(len, bytecode.get());
 
 	vm.run();
 

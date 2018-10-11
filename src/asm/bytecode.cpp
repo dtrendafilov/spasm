@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <new>
 
 #include "bytecode.hpp"
 
@@ -68,16 +67,7 @@ namespace SpasmImpl
 
 		const char *Bytecode_Memory::bytecode() const
 		{
-			size_t bc_size = _bytecode.size();
-			size_t length = sizeof(size_t) + bc_size;
-			char *bytecode = new char[length];
-
-			*((size_t *) bytecode) = bc_size;
-
-			std::copy (_bytecode.begin(), _bytecode.end(),
-					bytecode + sizeof (size_t));
-
-			return bytecode;
+			return reinterpret_cast<const char*>(_bytecode.data());
 		}
 
 		size_t Bytecode_Memory::size() const
