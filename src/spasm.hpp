@@ -1,17 +1,13 @@
-#ifndef  SPASM_HPP
-#define  SPASM_HPP
-
+#ifndef SPASM_HPP
+#define SPASM_HPP
 
 #include "spasm_impl.hpp"
 
-
-namespace Spasm 
+namespace Spasm
 {
-	using SpasmImpl::Spasm;
-	using SpasmImpl::PC_t;
-	using SpasmImpl::byte;
-}
+using SpasmImpl::byte;
+using SpasmImpl::PC_t;
+using SpasmImpl::Spasm;
+}  // namespace Spasm
 
-
-#endif   // #ifndef SPASM_HPP
-
+#endif  // #ifndef SPASM_HPP

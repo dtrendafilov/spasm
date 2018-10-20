@@ -9,28 +9,28 @@
 
 namespace SpasmImpl
 {
-	namespace ASM
-	{
-		class Assembler
-		{
-			public:
-				Assembler (Lexer::Tokenizer &, Bytecode_Stream &);
+namespace ASM
+{
+class Assembler
+{
+   public:
+    Assembler(Lexer::Tokenizer&, Bytecode_Stream&);
 
-				void assemble();
+    void assemble();
 
-			private:
-				void backpatch (const Symbol *);
-				void assemble_identifier (const Lexer::Token &);
+   private:
+    void backpatch(const Symbol*);
+    void assemble_identifier(const Lexer::Token&);
 
-				Lexer::Tokenizer *_tokenizer;
-				Bytecode_Stream *_bytecode;
+    Lexer::Tokenizer* _tokenizer;
+    Bytecode_Stream* _bytecode;
 
-				Symbol_Table _symbols;
+    Symbol_Table _symbols;
 
-		} ;	// class Assembler
+};  // class Assembler
 
-		const char * compile (std::istream &);
-	}	// namespace ASM
-}	// namespace SpasmImpl
+const char* compile(std::istream&);
+}  // namespace ASM
+}  // namespace SpasmImpl
 
-#endif	// ASSEMBPLER_HPP
+#endif  // ASSEMBPLER_HPP

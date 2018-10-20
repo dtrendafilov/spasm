@@ -1,5 +1,5 @@
-#ifndef  FRAMES_HPP
-#define  FRAMES_HPP
+#ifndef FRAMES_HPP
+#define FRAMES_HPP
 
 #include <stack>
 
@@ -7,48 +7,45 @@
 
 namespace SpasmImpl
 {
+//! Class representing the stack frame for a function
+/*!
+** The class is implemented as a simple stack of frames while each frame
+** is built up by a number of data_t objects
+*/
+class FrameStack
+{
+   public:
+    FrameStack();
+    FrameStack(const FrameStack&);
+    ~FrameStack();
+    FrameStack& operator=(const FrameStack&);
 
-	//! Class representing the stack frame for a function
-	/*!
-	** The class is implemented as a simple stack of frames while each frame
-	** is built up by a number of data_t objects
-	*/
-	class FrameStack
-	{
-		public:
-			FrameStack ();
-			FrameStack (const FrameStack &);
-			~FrameStack ();
-			FrameStack & operator= (const FrameStack &);
+    const data_t& operator[](int) const;
+    data_t& operator[](int);
+    void pop_frame();
+    void new_frame(size_t);
+    bool empty() const;
 
-			const data_t & operator[] (int) const;
-			data_t & operator[] (int);
-			void pop_frame ();
-			void new_frame (size_t); 
-			bool empty () const;
+   private:
+    //! pointer to the base of the stack
+    data_t* base_ptr;
 
-		private:
+    //! pointer to the beginning of the current frame
+    data_t* frame_ptr;
 
-			//! pointer to the base of the stack
-			data_t * base_ptr;
+    //! size of the whole stack in data_t objects
+    size_t g_size;
 
-			//! pointer to the beginning of the current frame
-			data_t * frame_ptr;
+    //! size of the current frame in data_t objects
+    size_t c_size;
 
-			//! size of the whole stack in data_t objects
-			size_t g_size;
+    //! stack of the offsets between frames in the stack.
+    std::stack<size_t> fstack;
 
-			//! size of the current frame in data_t objects
-			size_t c_size;
+    void copy_fstack(const FrameStack&);
+    void delete_fstack();
+};
 
-			//! stack of the offsets between frames in the stack.
-			std::stack<size_t> fstack;
+}  // namespace SpasmImpl
 
-			void copy_fstack (const FrameStack &);
-			void delete_fstack ();
-	} ;
-
-}
-
-#endif   // #ifndef FRAMES_HPP
-
+#endif  // #ifndef FRAMES_HPP
