@@ -23,12 +23,20 @@ Token::Token(Token::Token_type type,
     : _type(type), _lineno(lineno)
 {
     if (_type == integer || _type == xinteger)
+    {
         _value_int = strtol(start, NULL, 0);
+    }
     else if (_type == ident)
+    {
         if (end)
+        {
             _value_str = std::string(start, end);
+        }
         else
+        {
             _value_str = std::string(start);
+        }
+    }
 }
 
 Token::Token_type Token::type() const

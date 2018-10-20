@@ -104,8 +104,6 @@ void FrameStack::pop_frame()
 */
 void FrameStack::new_frame(size_t fsize)
 {
-    data_t* new_frame;
-
     if (frame_ptr + c_size + fsize > base_ptr + g_size)
     {
         size_t new_size = g_size + std::max(g_size, c_size + fsize);
@@ -118,7 +116,6 @@ void FrameStack::new_frame(size_t fsize)
         frame_ptr = new_base + (frame_ptr - base_ptr);
         base_ptr = new_base;
     }
-    new_frame = frame_ptr + c_size;
     fstack.push(frame_ptr - base_ptr);
     c_size = fsize;
 }

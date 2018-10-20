@@ -70,7 +70,7 @@ void Dstack::push(data_t x)
 void Dstack::push(byte* x, size_t x_size)
 {
     if (bottom + s_size < tos + x_size)
-        reserve(s_size + (s_size > x_size) ? s_size : x_size);
+        reserve(s_size + ((s_size > x_size) ? s_size : x_size));
     std::copy(x, x + x_size, tos);
     tos += x_size;
 }
@@ -96,7 +96,7 @@ void Dstack::pop(void* x, size_t x_size)
 */
 data_t Dstack::pop()
 {
-    data_t x;
+    data_t x{};
     if (tos - sizeof(data_t) >= bottom)
     {
         tos -= sizeof(data_t);
@@ -110,7 +110,7 @@ data_t Dstack::pop()
 */
 data_t Dstack::top() const
 {
-    data_t x;
+    data_t x{};
     if (tos - sizeof(data_t) >= bottom)
     {
         x = *((data_t*)(tos - sizeof(data_t)));
