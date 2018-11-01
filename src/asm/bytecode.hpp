@@ -73,7 +73,8 @@ class Bytecode_Memory : public Bytecode_Stream
     virtual void set_location(size_t, size_t);
     virtual size_t size() const;
 
-    const char* bytecode() const;
+    typedef std::vector<Bytecode_Stream::byte> Bytecode;
+    const Bytecode& bytecode() const;
 
    private:
     void push_byte(Bytecode_Stream::byte);
