@@ -8,6 +8,9 @@ solution 'spasm'
         'Symbols',
     }
 
+	defines {
+		'_SCL_SECURE_NO_WARNINGS',
+	}
 
     local root = '../build/'
 
