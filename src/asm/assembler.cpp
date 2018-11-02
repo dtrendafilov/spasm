@@ -65,15 +65,14 @@ void Assembler::assemble_identifier(const Lexer::Token& token)
     _bytecode->push_location(symbol->definition());
 }
 
-const char* compile(std::istream& istr)
+bool compile(std::istream& istr, Bytecode_Memory& bytecode)
 {
     Lexer::Tokenizer tokenizer(istr);
-    Bytecode_Memory bytecode;
     Assembler assembler(tokenizer, bytecode);
 
     assembler.assemble();
 
-    return bytecode.bytecode();
+    return true;
 }
 
 }  // namespace ASM

@@ -60,9 +60,9 @@ void Bytecode_Memory::push_location(size_t location)
         _bytecode.push_back((location >> (i << 3)) & 0xff);
 }
 
-const char* Bytecode_Memory::bytecode() const
+const Bytecode_Memory::Bytecode& Bytecode_Memory::bytecode() const
 {
-    return reinterpret_cast<const char*>(_bytecode.data());
+    return _bytecode;
 }
 
 size_t Bytecode_Memory::size() const
