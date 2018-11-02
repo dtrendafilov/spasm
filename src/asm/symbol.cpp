@@ -7,7 +7,7 @@ namespace SpasmImpl
 {
 namespace ASM
 {
-const size_t Symbol::notdefined = ~0;
+const size_t Symbol::notdefined = ~0ull;
 
 Symbol::Symbol() : _definition(notdefined) {}
 

@@ -7,7 +7,7 @@
 namespace SpasmImpl
 {
 typedef unsigned char byte;
-typedef int PC_t;
+typedef size_t PC_t;
 typedef int data_t;
 typedef std::stack<PC_t> Rstack_t;
 

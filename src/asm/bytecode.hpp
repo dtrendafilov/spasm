@@ -13,7 +13,8 @@ namespace ASM
 class Bytecode_Stream
 {
    public:
-    enum Opcode_t
+    typedef unsigned char byte;
+    enum Opcode_t : byte
     {
         halt = 0,
         push,
@@ -37,7 +38,6 @@ class Bytecode_Stream
         lesseq
     };
 
-    typedef unsigned char byte;
 
     virtual ~Bytecode_Stream();
     virtual void push_opcode(Opcode_t) = 0;

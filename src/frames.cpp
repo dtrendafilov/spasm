@@ -61,7 +61,7 @@ void FrameStack::copy_fstack(const FrameStack& fs)
 ** \param index - index of the data_t object
 ** \return const reference to the object
 */
-const data_t& FrameStack::operator[](int index) const
+const data_t& FrameStack::operator[](size_t index) const
 {
     return frame_ptr[index];
 }
@@ -72,7 +72,7 @@ const data_t& FrameStack::operator[](int index) const
 ** \param index - index of the data_t object
 ** \return reference to the object
 */
-data_t& FrameStack::operator[](int index)
+data_t& FrameStack::operator[](size_t index)
 {
     return frame_ptr[index];
 }

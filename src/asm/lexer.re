@@ -13,7 +13,7 @@ namespace SpasmImpl
 		{
 
 			Lexer::Lexer (std::istream & _file, size_t _buffer_size)
-				: file (&_file), buffer_size (_buffer_size), state (-1),
+				: file (&_file), buffer_size (_buffer_size), state (unsigned(-1)),
 				lineno (0)
 			{
 				buffer = new char[buffer_size];
@@ -283,7 +283,7 @@ IDENTIFIER	{
 				file->read (old_limit, limit - old_limit);
 				if (file->eof ()) {
 					size_t bytes = file->gcount ();
-					std::fill (old_limit + bytes, limit, 0);
+					std::fill (old_limit + bytes, limit, '\0');
 				}
 			}
 
@@ -292,7 +292,7 @@ IDENTIFIER	{
 				file->read (buffer, buffer_size);
 				if (file->eof ()) {
 					size_t bytes = file->gcount ();
-					std::fill (buffer + bytes, buffer + buffer_size, 0);
+					std::fill (buffer + bytes, buffer + buffer_size, '\0');
 				}
 
 				cursor = marker = token_start = buffer;

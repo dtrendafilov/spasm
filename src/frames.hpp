@@ -20,8 +20,8 @@ class FrameStack
     ~FrameStack();
     FrameStack& operator=(const FrameStack&);
 
-    const data_t& operator[](int) const;
-    data_t& operator[](int);
+    const data_t& operator[](size_t) const;
+    data_t& operator[](size_t);
     void pop_frame();
     void new_frame(size_t);
     bool empty() const;
