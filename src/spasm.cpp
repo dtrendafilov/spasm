@@ -120,7 +120,7 @@ const Dstack& Spasm::get_dstack() const
 */
 void Spasm::run()
 {
-    while (pc >= 0 && pc < bc_size)
+    while (pc < bc_size)
     {
         if (bytecode[pc] > 0 && bytecode[pc] < op_size)
             (this->*operations[bytecode[pc]])();
